@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <form >
+            <input type="text" placeholder="Tarea">
+            <input type="submit" value="Guardar tarea">
+
+
+
+
+        </form>
+        <br>
+        <input type="range" v-model="tiempo">{{tiempo}} <br>
+        <input type="search" v-model="busqueda" placeholder="Buscar Tarea">
+
+        <p v-for="(valor, propiedad) in usuario">{{valor}} : {{propiedad}}</p>
+        <hr>
+        <li v-for="tarea in filtroTareas">{{ tarea.nombre }} - {{tarea.tiempo}} </li>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script>
+        window.onload=()=>{
+            const form = document.querySelector("form");
+            const input = document.querySelector("input[type=text]")
+
+
+        };
+        new Vue({
+            el: "#app",
+            data:{
+                tiempo: 0,
+                busqueda:"",
+                usuario:{
+                    username: "testprueba",
+                    role:"admin",
+                    edad:20
+                },
+                    tareas:[
+                        {nombre:"Aprender JavaScript moderno",tiempo:3},
+                        {nombre:"Aprender Vue.js",tiempo:7},
+                        {nombre:"Reparar el coche",tiempo:22},
+                        {nombre:"Viajar mas",tiempo:16},
+                        {nombre:"Comprar la cena",tiempo:12},
+                        {nombre:"Mejorar como desarrollador",tiempo:9},
+                        {nombre:"Dar un curso",tiempo:14}
+                    ]
+            },
+            computed:{
+                filtroTareas(){
+                    return this.tareas.filter(tarea => {
+                        return tarea.tiempo <= this.tiempo && tarea.nombre.includes(this.busqueda);
+                    })
+                }
+
+            }
+        });
+        Vue.config.devtools = true;
+
+
+    </script>
+ 
+    
+</body>
+</html>
