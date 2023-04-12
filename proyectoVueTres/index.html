@@ -29,16 +29,16 @@
 
             <!-- Result -->
             <div class="result" v-if="result">
-                <h2 class="result__name"> Nombre Apellido </h2>
-                <img src="https://avatars.githubusercontent.com/u/8166774?v=4" alt="" class="result__avatar">
-                <p class="result_bio"> Biografia   texto y descripcion
+                <h2 class="result__name"> {{result.name}} </h2>
+                <img :src="result.avatar_url" alt="" class="result__avatar">
+                <p class="result_bio"> {{result.bio}}
                     <br>
-                    <a href="" class="result__blog">LINK ASIGNADO</a>
+                    <a :href="result.blog" target="_blank" class="result__blog">{{result.blog}}</a>
                 </p>
             </div>
             <p v-else>Waiting for search...</p>
             <!-- Error -->
-            <div class="result__error" v-if="error"> Error Found.</div>
+            <div class="result__error" v-if="error"> {{error}}</div>
         </article>
 
     <script src="js/main.js"></script>
