@@ -9,6 +9,13 @@ const app = Vue.createApp({
             favorites: new Map()
         };
     },
+    computed: {
+        isFavorite(){
+            return this.favorites.has(this.result.id)
+        }
+    },
+
+
     methods: {
         async doSearch() {
             this.result = this.error = null

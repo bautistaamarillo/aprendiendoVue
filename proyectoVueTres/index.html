@@ -14,7 +14,10 @@
 <body>
     <div id="app">
         <!-- Favorites -->
-        <div class="favorites">
+        <div class="favorite" v-for="[, favorite] in favorites">
+            <a :href="favorite.blog">
+                <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
+            </a>
         </div>
 
         <!-- Content -->
@@ -29,7 +32,7 @@
 
             <!-- Result -->
             <div class="result" v-if="result">
-                <a v-if="favorites.has(result.id)" href="#" class="result__toggle-favorite" @click="removeFavorite">Remove
+                <a v-if="isFavorite" href="#" class="result__toggle-favorite" @click="removeFavorite">Remove
                     Favorite⭐</a>
                 <a v-else href="#" class="result__toggle-favorite" @click="addFavorite">Add Favorite⭐</a>
                 <h2 class="result__name"> {{result.name}} </h2>
