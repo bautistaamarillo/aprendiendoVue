@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/jpg" href="favicon.jpg"/>
+    <link rel="icon" type="image/jpg" href="favicon.jpg" />
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +29,9 @@
 
             <!-- Result -->
             <div class="result" v-if="result">
-                <a href="#" class="result__toggle-favorite" @click="addFavorite">Add Favourite⭐</a>
+                <a v-if="favorites.has(result.id)" href="#" class="result__toggle-favorite" @click="removeFavorite">Remove
+                    Favorite⭐</a>
+                <a v-else href="#" class="result__toggle-favorite" @click="addFavorite">Add Favorite⭐</a>
                 <h2 class="result__name"> {{result.name}} </h2>
                 <img :src="result.avatar_url" alt="" class="result__avatar">
                 <p class="result_bio"> {{result.bio}}
@@ -42,11 +44,11 @@
             <div class="result__error" v-if="error"> {{error}}</div>
         </article>
 
-    <script src="js/main.js"></script>
-    <script>
-        const mountedApp = app.mount("#app")
-    </script>
-        </div>
+        <script src="js/main.js"></script>
+        <script>
+            const mountedApp = app.mount("#app")
+        </script>
+    </div>
 </body>
 
 </html>

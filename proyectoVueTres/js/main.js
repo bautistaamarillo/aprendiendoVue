@@ -29,7 +29,12 @@ const app = Vue.createApp({
 
         addFavorite(){
             this.favorites.set(this.result.id, this.result)
+
+        },
+        removeFavorite(){
+            this.favorites.delete(this.result.id)
         }
+
     }
 });
 
