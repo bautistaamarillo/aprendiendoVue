@@ -12,6 +12,9 @@ const app = Vue.createApp({
     computed: {
         isFavorite(){
             return this.favorites.has(this.result.id)
+        },
+        allFavorites(){
+            return Array.from(this.favorites.values())
         }
     },
 
@@ -36,10 +39,14 @@ const app = Vue.createApp({
 
         addFavorite(){
             this.favorites.set(this.result.id, this.result)
+            this.updateStorage()
 
         },
         removeFavorite(){
             this.favorites.delete(this.result.id)
+        },
+        updateStorage(){
+            window.localStorage.setItem('favorites',JSON.stringify(this.allFavorites))
         }
 
     }

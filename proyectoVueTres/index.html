@@ -14,12 +14,13 @@
 <body>
     <div id="app">
         <!-- Favorites -->
-        <div class="favorite" v-for="[, favorite] in favorites">
-            <a :href="favorite.blog">
-                <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
-            </a>
+        <div class="favorites">
+            <div class="favorite" v-for="[, favorite] in favorites">
+                <a :href="favorite.blog">
+                    <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
+                </a>
+            </div>
         </div>
-
         <!-- Content -->
         <article class="content">
             <h1 class="content__title">Search GitHub users</h1>
