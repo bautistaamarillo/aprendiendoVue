@@ -15,11 +15,13 @@
     <div id="app">
         <!-- Favorites -->
         <div class="favorites">
+            <transition-group name="list">
             <div class="favorite" v-for="favorite in allFavorites">
                 <a @click.prevent="showFavorite(favorite)" href="#" target="_blank">
                     <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
                 </a>
             </div>
+            </transition-group>
         </div>
         <!-- Content -->
         <article class="content">
@@ -31,7 +33,9 @@
                 <input type="submit" class="search__submit" value="Search">
             </form>
 
+
             <!-- Result -->
+            <Transition>
             <div class="result" v-if="result">
                 <a v-if="isFavorite" href="#" class="result__toggle-favorite" @click="removeFavorite">Remove
                     Favorite⭐</a>
@@ -43,6 +47,8 @@
                     <a :href="result.blog" target="_blank" class="result__blog">{{result.blog}}</a>
                 </p>
             </div>
+
+            </Transition>
             <p v-else>Waiting for search...</p>
             <!-- Error -->
             <div class="result__error" v-if="error"> {{error}}</div>
