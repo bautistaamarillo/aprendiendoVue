@@ -12,10 +12,13 @@ const app = Vue.createApp({
 
     created() {
         const savedFavorites = JSON.parse(window.localStorage.getItem("favorites"))
-        if (savedFavorites.length){
-            const favorites = new Map(savedFavorites.map(favorite => [favorite.id, favorite]))
-            this.favorites = favorites
-        }
+        // if (savedFavorites!= null){
+            if (savedFavorites?.length){
+                const favorites = new Map(savedFavorites.map(favorite => [favorite.id, favorite]))
+                this.favorites = favorites
+            }
+        // }
+    
     },
 
     computed: {
@@ -56,6 +59,10 @@ const app = Vue.createApp({
         },
         updateStorage(){
             window.localStorage.setItem('favorites',JSON.stringify(this.allFavorites))
+        },
+
+        showFavorite(favorite){
+            this.result = favorite
         }
 
     }

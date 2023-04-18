@@ -15,8 +15,8 @@
     <div id="app">
         <!-- Favorites -->
         <div class="favorites">
-            <div class="favorite" v-for="[, favorite] in favorites">
-                <a :href="favorite.blog">
+            <div class="favorite" v-for="favorite in allFavorites">
+                <a @click.prevent="showFavorite(favorite)" href="#" target="_blank">
                     <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
                 </a>
             </div>
@@ -48,11 +48,13 @@
             <div class="result__error" v-if="error"> {{error}}</div>
         </article>
 
-        <script src="js/main.js"></script>
-        <script>
-            const mountedApp = app.mount("#app")
-        </script>
+
+
     </div>
+    <script src="js/main.js"></script>
+    <script>
+        const mountedApp = app.mount("#app")
+    </script>
 </body>
 
 </html>
