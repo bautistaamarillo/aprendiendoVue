@@ -30,7 +30,6 @@ const app = Vue.createApp({
         }
     },
 
-
     methods: {
         async doSearch() {
             this.result = this.error = null
@@ -56,6 +55,7 @@ const app = Vue.createApp({
         },
         removeFavorite(){
             this.favorites.delete(this.result.id)
+            this.updateStorage()
         },
         updateStorage(){
             window.localStorage.setItem('favorites',JSON.stringify(this.allFavorites))
