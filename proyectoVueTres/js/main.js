@@ -1,5 +1,7 @@
 const API = "https://api.github.com/users/";
 
+const requestMaxTimeMs = 3000
+
 const app = Vue.createApp({
     data() {
         return {
@@ -14,7 +16,7 @@ const app = Vue.createApp({
         const savedFavorites = JSON.parse(window.localStorage.getItem("favorites"))
         // if (savedFavorites!= null){
             if (savedFavorites?.length){
-                const favorites = new Map(savedFavorites.map(favorite => [favorite.id, favorite]))
+                const favorites = new Map(savedFavorites.map(favorite => [favorite.login, favorite]))
                 this.favorites = favorites
             }
         // }
@@ -23,22 +25,43 @@ const app = Vue.createApp({
 
     computed: {
         isFavorite(){
-            return this.favorites.has(this.result.id)
+            return this.favorites.has(this.result.login)
         },
         allFavorites(){
             return Array.from(this.favorites.values())
         }
     },
 
+
     methods: {
         async doSearch() {
             this.result = this.error = null
+
+            const foundInFavorites = this.favorites.get(this.search)
+
+            const shouldRequestAgain = (() => {
+                if (!!foundInFavorites){
+                    const { lastRequestTime } = foundInFavorites
+                    const now = Date.now()
+                    return (now - lastRequestTime) > requestMaxTimeMs
+                }
+                return false
+            })() // Esto es un  IIFE
+
+
+            if (!!foundInFavorites && !shouldRequestAgain){
+                console.log("Found and we use the cached version")
+                return this.result = foundInFavorites
+            }
+
             try {
+                console.log("Not found or cached version is too old")
                 const response = await fetch(API + this.search)
                 if (!response.ok) throw new Error("User not found")
                 const data = await response.json()
                 console.log(data)
                 this.result = data
+                foundInFavorites.lastRequestTime = Date.now()
             }
             catch (error) {
                 this.error = error
@@ -49,12 +72,13 @@ const app = Vue.createApp({
         },
 
         addFavorite(){
-            this.favorites.set(this.result.id, this.result)
+            this.result.lastRequestTime = Date.now()
+            this.favorites.set(this.result.login, this.result)
             this.updateStorage()
 
         },
         removeFavorite(){
-            this.favorites.delete(this.result.id)
+            this.favorites.delete(this.result.login)
             this.updateStorage()
         },
         updateStorage(){
