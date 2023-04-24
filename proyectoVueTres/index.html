@@ -15,13 +15,16 @@
     <div id="app">
         <!-- Favorites -->
         <div class="favorites">
-                <transition-group name="list">
-                    <div class="favorite" v-for="favorite in allFavorites" :key="favorite.id">
-                        <a @click.prevent="showFavorite(favorite)" href="#" target="_blank">
-                            <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
-                        </a>
-                    </div>
-                </transition-group>
+            <transition-group name="list">
+                <div
+                    class="favorite"
+                    :class="{'favorite--selected': checkFavorite(favorite.login)}"
+                    v-for="favorite in allFavorites" :key="favorite.id">
+                    <a @click.prevent="showFavorite(favorite)" href="#" target="_blank">
+                        <img :src="favorite.avatar_url" alt="favorite.name" class="favorite__avatar">
+                    </a>
+                </div>
+            </transition-group>
         </div>
         <!-- Content -->
         <article class="content">
@@ -46,9 +49,9 @@
                         <br>
                         <a :href="result.blog" target="_blank" class="result__blog">{{result.blog}}</a>
                     </p>
+            
                 </div>
-
-                <p v-else>Waiting for search...</p>
+                <p v-else> Waiting for search...</p>
             </Transition>
 
             <!-- Error -->
