@@ -1,6 +1,6 @@
 const API = "https://api.github.com/users/";
 
-const requestMaxTimeMs = 3000;
+const requestMaxTimeMs = 10000;
 
 const app = Vue.createApp({
   data() {
@@ -65,7 +65,7 @@ const app = Vue.createApp({
         const data = await response.json();
         console.log(data);
         this.result = data;
-        foundInFavorites.lastRequestTime = Date.now();
+        this.result.lastRequestTime = Date.now();
       } catch (error) {
         this.error = error;
       } finally {
