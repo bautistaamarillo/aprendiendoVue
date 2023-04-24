@@ -14,7 +14,7 @@ const app = Vue.createApp({
         const savedFavorites = JSON.parse(window.localStorage.getItem("favorites"))
         // if (savedFavorites!= null){
             if (savedFavorites?.length){
-                const favorites = new Map(savedFavorites.map(favorite => [favorite.id, favorite]))
+                const favorites = new Map(savedFavorites.map(favorite => [favorite.login, favorite]))
                 this.favorites = favorites
             }
         // }
@@ -23,7 +23,7 @@ const app = Vue.createApp({
 
     computed: {
         isFavorite(){
-            return this.favorites.has(this.result.id)
+            return this.favorites.has(this.result.login)
         },
         allFavorites(){
             return Array.from(this.favorites.values())
@@ -34,9 +34,21 @@ const app = Vue.createApp({
     methods: {
         async doSearch() {
             this.result = this.error = null
+
+            const foundFavorites = this.favorites.get(this.search)
+
+            if(!!foundFavorites)
+            return this.result = foundFavorites
+
+
+
+
             try {
                 const response = await fetch(API + this.search)
-                if (!response.ok) throw new Error("User not found")
+                if (response.status = 403)
+                    throw new Error("Server is not available.")
+                if (!response.ok)
+                    throw new Error("User not found")
                 const data = await response.json()
                 console.log(data)
                 this.result = data
@@ -50,12 +62,13 @@ const app = Vue.createApp({
         },
 
         addFavorite(){
-            this.favorites.set(this.result.id, this.result)
+            this.favorites.set(this.result.login, this.result)
             this.updateStorage()
 
         },
         removeFavorite(){
-            this.favorites.delete(this.result.id)
+            this.favorites.delete(this.result.login)
+            this.updateStorage()
         },
         updateStorage(){
             window.localStorage.setItem('favorites',JSON.stringify(this.allFavorites))
