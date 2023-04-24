@@ -45,7 +45,7 @@ const app = Vue.createApp({
 
             try {
                 const response = await fetch(API + this.search)
-                if (response.status = 403)
+                if (response.status == 403)
                     throw new Error("Server is not available.")
                 if (!response.ok)
                     throw new Error("User not found")
