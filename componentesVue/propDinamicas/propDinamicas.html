@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>componentesVue</title>
+    <style>
+        .boton {
+            background-color: rgb(36, 35, 36);
+            color: white;
+            padding: 10px 30px;
+            display: block;
+            border-radius: 0 0 10px 0;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 1px rgb(175, 179, 196);
+            font-family: sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <boton v-for="boton in botones" :key='boton.id' 
+                :color="boton.color"
+                :enlace="boton.enlace"
+                :anchor-text="boton.anchorText"/>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script>
+        Vue.component('boton', {
+            props: {
+                color: String,
+                enlace: {
+                    type: String,
+                    default: "https://www.escuelavue.es"
+                },
+                anchorText: String
+            },
+            template: `<a class="boton" :style="'background-color:' + color" :href="enlace">{{ anchorText }}</a>`,
+        });
+
+        new Vue({
+            el: "#app",
+            data: {
+                botones: [
+                    {id:1,enlace: "http://www.wmedia.es", anchorText: "WMedia", color: "red" },
+                    {id:2,enlace: "http://www.escuelavue.es", anchorText: "Escuela Vue", color: "blue"},
+                    {id:3,enlace: "http://www.vuejs.org", anchorText: "Vue.JS", color: "green"},
+                ]
+            }
+        });
+        Vue.config.devtools = true;
+    </script>
+</body>
+</html>
