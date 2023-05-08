@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            background-color: gray;
+            font-family: sans-serif;
+        }
+
+        main {
+            width: 560px;
+            padding: 20px;
+            background-color: white;
+            margin: 20px auto;
+            border: 1px solid;
+            box-shadow: 1px 1px 3px black;
+        }
+
+        header,
+        footer {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <articulo-base :datos="datos">
+
+            <template #cabecera>
+                <h1>{{ datos.titulo }}</h1>
+            </template>
+
+            <template #contenido>
+                <h1>Esto es otro título</h1>
+                <p>Esto es otro contenido.</p>
+            </template>
+
+        </articulo-base>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script type="text/x-template" id="articulo-base-template">
+        <main>
+            <header>
+                <slot name="cabecera" :datos="datos">
+                    <h3>Bienvenidos a esta pagina</h3>
+                    <h5>Subtitulo</h5>
+                </slot>
+            </header>
+
+            <article>
+               <slot name="contenido">
+                   <h1>Titulo del articulo</h1>
+                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam quas in quaerat velit repudiandae!
+                       Quis voluptate impedit, in fugiat ex recusandae quas eum modi provident consequatur, eius minima
+                       nisi temporibus!</p>
+               </slot>
+            </article>
+
+            <aside>
+                <slot name="lateral">
+                    <nav>
+                        <ul>
+                            <li>Enlace 1</li>
+                            <li>Enlace 2</li>
+                            <li>Enlace 3</li>
+                        </ul>
+                    </nav>
+                </slot>
+            </aside>
+
+            <footer>
+                <slot name="pie">
+                    <small>@Copyright 2023</small>
+                </slot>
+            </footer>
+        </main>
+    </script>
+    <script>
+        Vue.component('articulo-base', {
+            props: ['datos'],
+            template: '#articulo-base-template',
+        });
+
+        new Vue({
+            el: "#app",
+            data: {
+                datos: {
+                    titulo: "Este es un título desde el modelo",
+                }
+            }
+        });
+
+        Vue.config.devtools = true;
+    </script>
+</body>
+
+</html>
